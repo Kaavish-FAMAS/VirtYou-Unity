@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Management;
 
 public class UIControllerHome : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class UIControllerHome : MonoBehaviour
     public Button VRWithoutData;
     public Button Tutorial;
     public Button About;
+
+    public void StartXR()
+    {
+        XRGeneralSettings.Instance.Manager.InitializeLoaderSync();
+        XRGeneralSettings.Instance.Manager.StartSubsystems();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +37,7 @@ public class UIControllerHome : MonoBehaviour
 
     void VRWithDataPressed()
     {
+        StartXR();
         SceneManager.LoadScene("SampleScene");
     }
 

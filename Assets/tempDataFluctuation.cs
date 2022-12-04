@@ -14,7 +14,7 @@ public class tempDataFluctuation : MonoBehaviour
     // Read data from CSV
     void readData()
     {
-        StreamReader strReader = new StreamReader("C:\\Users\\fahad\\Documents\\Work\\Unity Projects\\VirtYou\\Assets\\IOT-temp.csv");
+        StreamReader strReader = new StreamReader("C:\\Users\\Asad\\Documents\\VirtYou-Unity\\Assets\\IOT-temp.csv");
         bool endOfFile = false;
         while (!endOfFile)
         {
