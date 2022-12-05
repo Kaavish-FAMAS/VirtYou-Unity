@@ -1,9 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="height: 395px; background-color: rgb(234, 217, 241);">
+    <ui:VisualElement style="height: 1078px; background-color: rgb(194, 166, 221);">
         <ui:Label text="VirtYou" display-tooltip-when-elided="true" enable-rich-text="false" style="position: absolute; color: rgb(19, 17, 17); font-size: 30px; top: 19px; left: 325px; -unity-font-style: bold-and-italic;" />
         <ui:GroupBox style="position: absolute; top: 56px; left: 35px; height: 168px; width: 582px;">
-            <ui:VisualElement style="height: 156px; width: 250px; background-image: url(&apos;project://database/Assets/controller.jpg?fileID=2800000&amp;guid=49ac7ef9af9ec5944bd4d1f0aa0238ca&amp;type=3#controller&apos;);" />
-            <ui:Label text="This bluetooth controller will allow the user to select&#10;objects and move around in the VR space. This&#10;controller has six buttons an a scroller. &#10;1. Use the scoller to move around. &#10;2. Use the buttons to select objects." display-tooltip-when-elided="true" style="position: absolute; top: 9px; left: 274px; height: 150px; width: 296px; color: rgba(10, 9, 9, 255);" />
+            <ui:VisualElement style="height: 158px; width: 254px; background-image: url(&apos;project://database/Assets/controller.jpg?fileID=2800000&amp;guid=ef045c9af449e4246a5918c0656acf2c&amp;type=3#controller&apos;);" />
+            <ui:Label text="This bluetooth controller will allow the user to select&#10;objects and move around in the VR space. This&#10;controller has six buttons an a scroller. &#10;1. Use the scoller to move around. &#10;2. Use the buttons to select objects." display-tooltip-when-elided="true" style="position: absolute; top: 9px; left: 280px; height: 218px; width: 414px; color: rgb(10, 9, 9); font-size: 30px;" />
         </ui:GroupBox>
     </ui:VisualElement>
 </ui:UXML>
