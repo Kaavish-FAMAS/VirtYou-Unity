@@ -4,29 +4,27 @@ using UnityEngine;
 
 public class movementBody : MonoBehaviour
 {
-    // Start is called before the first frame update
     Rigidbody rb;
-    [SerializeField] float movementSpeed = 6f;
-    [SerializeField] float jumpForce = 5f;
+    public Transform vrCamera;
+    public float movementSpeed = 6f;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        vrCamera = Camera.main.transform;
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        // Get the camera's forward direction without any vertical component
+        Vector3 cameraForward = Vector3.ProjectOnPlane(vrCamera.forward, Vector3.up).normalized;
+
+        // Calculate movement based on input and camera direction
         float horizontalInput = Input.GetAxis("Horizontal");
-        //Debug.Log(horizontalInput.ToString());
         float verticalInput = Input.GetAxis("Vertical");
-        //Debug.Log(verticalInput.ToString());
+        Vector3 movement = (horizontalInput * vrCamera.right + verticalInput * cameraForward).normalized * movementSpeed;
 
-        rb.velocity = new Vector3(horizontalInput * movementSpeed, rb.velocity.y, verticalInput * movementSpeed);
-        rb.velocity.Normalize();
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
-        }
+        // Apply movement to the rigidbody
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }
 }
