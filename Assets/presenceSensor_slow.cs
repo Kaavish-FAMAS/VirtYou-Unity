@@ -13,7 +13,7 @@ public class presenceSensor_slow : MonoBehaviour
     {
         System.Random rd = new System.Random();
         float rand_num = rd.Next(20, 50);
-        Debug.Log(rand_num);
+        //Debug.Log(rand_num);
         return rand_num;
     }
 
@@ -30,7 +30,7 @@ public class presenceSensor_slow : MonoBehaviour
         if (timerChecker == 500)
         {
             float data = RandomTemperature();
-            Debug.Log(data.ToString());
+            //Debug.Log(data.ToString());
             timerChecker = 0;
 
             if (data < 25)
