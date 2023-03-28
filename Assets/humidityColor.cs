@@ -4,15 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using TMPro;
 
-public class displayHumidity : MonoBehaviour
+public class humidityColor : MonoBehaviour
 {
     private MongoClient mongoClient;
     private IMongoDatabase db;
     private IMongoCollection<BsonDocument> collection;
     private IEnumerator<BsonDocument> cursor;
-    private TextMeshProUGUI textMeshPro;
+    private Image waterDroplet;
+
+    private void UpdateColor(double humVal)
+    {
+        if (humVal <= 64.3)
+        {
+            waterDroplet.material.SetColor("_Color", Color.yellow);
+        }
+        else
+        {   
+            waterDroplet.material.SetColor("_Color", Color.red);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +40,7 @@ public class displayHumidity : MonoBehaviour
         // Get a cursor to the first document
         cursor = collection.FindSync(new BsonDocument()).ToEnumerable().GetEnumerator();
 
-        textMeshPro = GetComponent<TextMeshProUGUI>();
+        waterDroplet = GetComponent<Image>();
 
         // Start the coroutine to update the color every 15 seconds
         StartCoroutine(UpdateColorCoroutine());
@@ -44,7 +55,7 @@ public class displayHumidity : MonoBehaviour
             {
                 var document = cursor.Current;
                 double humidityVal = document[1]["humidity"].ToDouble();
-                textMeshPro.text = "Humidity \n" + humidityVal.ToString("0.00") + "%";
+                UpdateColor(humidityVal);
             }
             else // If we have reached the end of the cursor, reset it
             {
