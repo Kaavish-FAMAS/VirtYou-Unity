@@ -7,6 +7,10 @@ public class cameraSwitch : MonoBehaviour
 {
     public Camera normalCamera;
     public Camera birdseyeCamera;
+    public GameObject firstPlane;
+    public GameObject secondPlane;
+    public GameObject thirdPlane;
+    public GameObject fourthPlane;
 
     private bool isBirdseyeView = false;
 
@@ -14,6 +18,11 @@ public class cameraSwitch : MonoBehaviour
     {
         normalCamera.enabled = true;
         birdseyeCamera.enabled = false;
+        // Disable plane renderer component by default
+        firstPlane.GetComponent<MeshRenderer>().enabled = false;
+        secondPlane.GetComponent<MeshRenderer>().enabled = false;
+        thirdPlane.GetComponent<MeshRenderer>().enabled = false;
+        fourthPlane.GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void Update()
@@ -43,6 +52,11 @@ public class cameraSwitch : MonoBehaviour
 
         birdseyeCamera.enabled = true;
         XRSettings.showDeviceView = false;
+        // Enable plane renderer component when switching to bird's eye view camera
+        firstPlane.GetComponent<MeshRenderer>().enabled = true;
+        secondPlane.GetComponent<MeshRenderer>().enabled = true;
+        thirdPlane.GetComponent<MeshRenderer>().enabled = true;
+        fourthPlane.GetComponent<MeshRenderer>().enabled = true;
     }
 
     private void DisableBirdseyeView()
@@ -50,6 +64,10 @@ public class cameraSwitch : MonoBehaviour
         birdseyeCamera.enabled = false;
         normalCamera.enabled = true;
         XRSettings.showDeviceView = true;
+        // Disable plane renderer component when switching to normal camera
+        firstPlane.GetComponent<MeshRenderer>().enabled = false;
+        secondPlane.GetComponent<MeshRenderer>().enabled = false;
+        thirdPlane.GetComponent<MeshRenderer>().enabled = false;
+        fourthPlane.GetComponent<MeshRenderer>().enabled = false;
     }
 }
-
