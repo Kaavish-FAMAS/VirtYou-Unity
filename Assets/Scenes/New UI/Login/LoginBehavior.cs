@@ -12,59 +12,37 @@ using UnityEngine.Networking;
 public class LoginBehavior : MonoBehaviour
 {
     // checking node.js
-    string geturl = "http://127.0.0.1:3000/getuser";
-    string posturl = "http://127.0.0.1:3000/adduser";
+    string geturl =  "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser";
+    string posturl = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser";
+    string testinggeturl = "http://127.0.0.1:5000/getuser/";
+    string testingposturl = "http://127.0.0.1:5000/adduser/";
     string userDetails = "";
-    public void getText()
-    {
-        
-        StartCoroutine(GetTheText());
-    }
-    IEnumerator GetTheText()
-    {
-        WWW www = new WWW(geturl);
-        
-        yield return www;
-        Debug.Log(www.text);
-        
-    }
 
-        public void getUser()
+    public void getUser()
     {
         Debug.Log("Login button pressed");
         string id = ObjectId.GenerateNewId().ToString();
-        string emailuser = "aliza.khorasi@gmail.com";
-        string passworduser = "virtyou123";
-
-        StartCoroutine(getUserQuery(id, emailuser, passworduser));
+        
+        StartCoroutine(GetUserQuery(emailText, passwordText));
     }
 
-    IEnumerator getUserQuery(string id, string emailuser, string passworduser)
+    IEnumerator GetUserQuery(string email, string password)
 {
-    // Create a JSON string manually
-string jsonStr = "{\"_id\":\"" + id + "\",\"password\":\"" + passworduser + "\",\"name\":\"" + emailuser + "\"}";
-
-    // Create a UnityWebRequest instance
-    UnityWebRequest www = new UnityWebRequest(geturl, "POST");
-    byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);
-    www.uploadHandler = new UploadHandlerRaw(jsonBytes);
-    www.SetRequestHeader("Content-Type", "application/json");
-
-    // Send the request and wait for the response
-    yield return www.SendWebRequest();
-
-    if (www.result == UnityWebRequest.Result.Success)
+    string url = "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser/?email=" + email + "&password=" + password;
+    using (UnityWebRequest www = UnityWebRequest.Get(url))
     {
-        Debug.Log("JSON data sent successfully!");
-        Debug.Log("Response: " + www.downloadHandler.text);
-    }
-    else
-    {
-        Debug.LogError("Failed to send JSON data: " + www.error);
-    }
+        yield return www.SendWebRequest();
 
-    // Clean up the UnityWebRequest
-    www.Dispose();
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Request successful!");
+            Debug.Log("Response: " + www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Request failed: " + www.error);
+        }
+    }
 }
 
     public void setText()
@@ -105,10 +83,6 @@ string jsonStr = "{\"_id\":\"" + id + "\",\"password\":\"" + passworduser + "\",
     // Clean up the UnityWebRequest
     www.Dispose();
 }
-
-
-
-
     public TMP_InputField email;
     public string emailText;
     public TMP_InputField password;
@@ -160,8 +134,8 @@ string jsonStr = "{\"_id\":\"" + id + "\",\"password\":\"" + passworduser + "\",
     public void Login()
     {
         Debug.Log("Login button pressed");
-        // emailText = email.text;
-        // passwordText = password.text;
+        emailText = email.text;
+        passwordText = password.text;
 
         // if (emailText == "aliza.khorasi@gmail.com" & passwordText == "virtyou123")
         // {
