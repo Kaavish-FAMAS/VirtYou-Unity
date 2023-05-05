@@ -11,7 +11,6 @@ public class fog : MonoBehaviour
     private IMongoDatabase db;
     private IMongoCollection<BsonDocument> collection;
     private IEnumerator<BsonDocument> cursor;
-    
 
     void Start()
     {
@@ -40,15 +39,18 @@ public class fog : MonoBehaviour
                 var document = cursor.Current;
                 int co2Level = (int) document[1]["co2"];
                 Debug.Log(co2Level);
+
+                RenderSettings.fog = true;
                 
                 if (co2Level > 200)
                 {
-                    RenderSettings.fog = true;
                     RenderSettings.fogColor = Color.red;
+                    RenderSettings.fogDensity = 0.06F;
                 }
                 else
                 {
                     RenderSettings.fogColor = Color.green;
+                    RenderSettings.fogDensity = 0.05F;
                 }
             }
             
