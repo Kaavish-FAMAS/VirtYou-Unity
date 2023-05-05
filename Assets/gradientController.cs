@@ -33,11 +33,11 @@ public class gradientController : MonoBehaviour
         // Set the color of the material if it exists
         if (material != null)
         {
-            Debug.Log("NOT NULL");
+            // Debug.Log("NOT NULL");
             material.color = color;
         } else
         {
-            Debug.Log("NULL");
+            // Debug.Log("NULL");
         }
 
     }

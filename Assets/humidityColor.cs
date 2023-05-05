@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using UnityEngine.Networking;
 
 public class humidityColor : MonoBehaviour
 {
-    private MongoClient mongoClient;
-    private IMongoDatabase db;
     private IMongoCollection<BsonDocument> collection;
     private IEnumerator<BsonDocument> cursor;
     private Image waterDroplet;
 
     private void UpdateColor(double humVal)
     {
-        if (humVal <= 64.3)
+        if (humVal <= 46.0)
         {
             waterDroplet.material.SetColor("_Color", Color.yellow);
         }
@@ -28,43 +27,53 @@ public class humidityColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string connectionString = "mongodb+srv://asadtariq1999:virtyou@testingvirtyou.ner4fbz.mongodb.net/?retryWrites=true&w=majority";
-        
-        mongoClient = new MongoClient(connectionString);
-        
-        db = mongoClient.GetDatabase("sensors");
-
-        // Get a reference to the "readings" collection
-        collection = db.GetCollection<BsonDocument>("readings");
-
-        // Get a cursor to the first document
-        cursor = collection.FindSync(new BsonDocument()).ToEnumerable().GetEnumerator();
+        string apiUrl = "https://flask-mongo-backend-ar230500-famas.vercel.app/getsensor/";
 
         waterDroplet = GetComponent<Image>();
 
         // Start the coroutine to update the color every 15 seconds
-        StartCoroutine(UpdateColorCoroutine());
+        StartCoroutine(UpdateColorCoroutine(apiUrl));
     }
 
-    private IEnumerator UpdateColorCoroutine()
+    private IEnumerator UpdateColorCoroutine(string apiUrl)
     {
         while (true)
         {
-            // If there are more documents to read, read the next one
-            if (cursor.MoveNext())
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
             {
-                var document = cursor.Current;
-                double humidityVal = document[1]["humidity"].ToDouble();
-                UpdateColor(humidityVal);
-            }
-            else // If we have reached the end of the cursor, reset it
-            {
-                cursor.Dispose();
-                cursor = collection.FindSync(new BsonDocument()).ToEnumerable().GetEnumerator();
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.Log("Error: " + webRequest.error);
+                }
+                else
+                {
+                    string json = webRequest.downloadHandler.text;
+                    List<BsonDocument> readings = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<List<BsonDocument>>(json);
+                    Debug.Log(readings);
+
+                    if (readings != null && readings.Count > 0)
+                    {
+
+                        // Iterate over the readings and display the humidity for each one
+                        foreach (BsonDocument reading in readings)
+                        {
+                            double humidityVal = reading[1]["humidity"].ToDouble();
+                            UpdateColor(humidityVal);
+                            yield return new WaitForSeconds(5);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("No sensor data found");
+                    }
+                }
             }
 
             // Wait for 15 seconds before executing the next iteration of the coroutine
             yield return new WaitForSeconds(5);
         }
+
     }
 }
