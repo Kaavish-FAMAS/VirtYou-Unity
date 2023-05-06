@@ -3,71 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using MongoDB.Driver;
-using MongoDB.Bson;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+using MongoDB.Bson;
 
 public class LoginBehavior : MonoBehaviour
 {
+    string geturl =  "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser";
+    string posturl = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser";
+    string testinggeturl = "http://127.0.0.1:5000/getuser/";
+    string testingposturl = "http://127.0.0.1:5000/adduser/";
+    string userDetails = "";
+
     public TMP_InputField email;
     public string emailText;
     public TMP_InputField password;
     public string passwordText;
-    private MongoClient mongoClient;
-    private IMongoDatabase db;
     public static bool userRole;
 
-    private void connection()
+    public void getUser()
     {
-        string connectionString = "mongodb+srv://asadtariq1999:virtyou@testingvirtyou.ner4fbz.mongodb.net/?retryWrites=true&w=majority";
-        Debug.Log("Estabilishing connection...");
-        mongoClient = new MongoClient(connectionString);
-        Debug.Log("Connection Established...");
-        db = mongoClient.GetDatabase("Authentication");
+        Debug.Log("Login button pressed");
+        
+        StartCoroutine(GetUserQuery(emailText, passwordText));
     }
 
-    private void authenticate(string email, string password)
+    IEnumerator GetUserQuery(string email, string password)
     {
-        connection();
-        var collection = db.GetCollection<BsonDocument>("users");
-        Debug.Log("Collection found");
-        var filter = Builders<BsonDocument>.Filter.Eq("email", email) &
-              Builders<BsonDocument>.Filter.Eq("password", password);
-        List<BsonDocument> results = collection.Find(filter).ToList();
-        // done authentication
-        
-
-        if (results.Count > 0)
+        string url = "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser/?email=" + email + "&password=" + password;
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            Debug.Log("Login Successful");
-            if (results[0]["role"].ToString() == "admin")
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
             {
-                userRole = true;
+                Debug.Log("Request successful!");
+                if (www.downloadHandler.text == "does not exist")
+                {
+                    Debug.Log("No user found");
+                }
+                else
+                {
+                    Debug.Log("Response: " + www.downloadHandler.text);
+                    SceneManager.LoadScene("MenuModified");
+                }
+                Debug.Log("Response: " + www.downloadHandler.text);
             }
             else
             {
-                userRole = false;
+                Debug.LogError("Request failed: " + www.error);
             }
-            SceneManager.LoadScene("MenuModified");
         }
-        else
-        {
-            Debug.Log("Login Failed");
-        }
-       
     }
+
 
     public void Login()
     {
         Debug.Log("Login button pressed");
         emailText = email.text;
         passwordText = password.text;
-
-        if (emailText == "aliza.khorasi@gmail.com" & passwordText == "virtyou123")
-        {
-            SceneManager.LoadScene("MenuModified");
-        }
-
-        //authenticate(emailText, passwordText);
+        getUser();
     }
 }

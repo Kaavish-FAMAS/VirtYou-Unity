@@ -6,6 +6,7 @@ using TMPro;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 
 
@@ -23,31 +24,6 @@ public class signup : MonoBehaviour
     private MongoClient mongoClient;
     private IMongoDatabase db;
 
-    private void connection()
-    {
-        string connectionString = "mongodb+srv://asadtariq1999:virtyou@testingvirtyou.ner4fbz.mongodb.net/?retryWrites=true&w=majority";
-        Debug.Log("Estabilishing connection...");
-        mongoClient = new MongoClient(connectionString);
-        Debug.Log("Connection Established...");
-        db = mongoClient.GetDatabase("Authentication");
-    }
-
-    private void updateDB()
-    {
-        connection();
-        var collection = db.GetCollection<BsonDocument>("users");
-        var document = new BsonDocument
-        {
-            {"_id", ObjectId.GenerateNewId()},
-            {"name", nameText},
-            {"email", emailText},
-            {"password", passwordText},
-            {"role", toggleValue}
-        };
-        collection.InsertOne(document);
-        SceneManager.LoadScene("LoginModified");
-        Debug.Log("Data Inserted...");
-    }
 
     public bool verify(string name, string email, string password)
     {
@@ -60,6 +36,40 @@ public class signup : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void createUser()
+    {
+
+        StartCoroutine(CreateTheUser(emailText, passwordText, nameText, toggleValue));
+    }
+
+    IEnumerator CreateTheUser(string emailuser, string passworduser, string nameuser, string roleuser)
+    {
+       string url = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser/?email=" + emailuser + "&password=" + passworduser + "&name=" + nameuser + "&role=" + roleuser + "&id=" + ObjectId.GenerateNewId();
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Request successful!");
+                if (www.downloadHandler.text == "User Added")
+                {
+                   Debug.Log("Response: " + www.downloadHandler.text);
+                    SceneManager.LoadScene("LoginModified");
+                }
+                else
+                {
+                    Debug.Log("Error");
+                }
+                Debug.Log("Response: " + www.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError("Request failed: " + www.error);
+            }
+        }
     }
 
     public void Register()
@@ -77,7 +87,7 @@ public class signup : MonoBehaviour
         passwordText = password.text;
         if (verify(nameText, emailText, passwordText))
         {
-            updateDB();
+            createUser();
         }
         else
         {
