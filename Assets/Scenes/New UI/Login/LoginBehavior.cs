@@ -9,11 +9,6 @@ using MongoDB.Bson;
 
 public class LoginBehavior : MonoBehaviour
 {
-    string geturl =  "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser";
-    string posturl = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser";
-    string testinggeturl = "http://127.0.0.1:5000/getuser/";
-    string testingposturl = "http://127.0.0.1:5000/adduser/";
-    string userDetails = "";
 
     public TMP_InputField email;
     public string emailText;

@@ -10,6 +10,7 @@ public class fog : MonoBehaviour
 {
     private IMongoCollection<BsonDocument> collection;
     private IEnumerator<BsonDocument> cursor;
+    private Color newColor;
 
     void Start()
     {
@@ -48,13 +49,21 @@ public class fog : MonoBehaviour
 
                             if (co2Level > 200)
                             {
-                                RenderSettings.fogColor = Color.red;
-                                RenderSettings.fogDensity = 0.06F;
+                                // RenderSettings.fogColor.SetColor("_Color", new Color(153, 143, 199));
+                                bool bConverted = ColorUtility.TryParseHtmlString("#998FC7", out newColor);
+                                if (bConverted) {
+                                    RenderSettings.fogColor = newColor;
+                                    RenderSettings.fogDensity = 0.06F;
+                                }
+                                
                             }
                             else
                             {
-                                RenderSettings.fogColor = Color.green;
-                                RenderSettings.fogDensity = 0.05F;
+                                bool bConverted = ColorUtility.TryParseHtmlString("#3b8ea5", out newColor);
+                                if (bConverted) {
+                                    RenderSettings.fogColor = newColor;
+                                    RenderSettings.fogDensity = 0.05F;
+                                }
                             }
 
                             yield return new WaitForSeconds(5);

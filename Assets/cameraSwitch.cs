@@ -27,7 +27,7 @@ public class cameraSwitch : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Change this to the input you want to use to switch between views
+        if (Input.GetButtonDown("hit")) // Change this to the input you want to use to switch between views
         {
             isBirdseyeView = !isBirdseyeView;
 
