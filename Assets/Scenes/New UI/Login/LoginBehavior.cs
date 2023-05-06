@@ -19,7 +19,7 @@ public class LoginBehavior : MonoBehaviour
     public string emailText;
     public TMP_InputField password;
     public string passwordText;
-    public static bool userRole;
+    public static string userRole;
 
     public void getUser()
     {
@@ -44,7 +44,8 @@ public class LoginBehavior : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Response: " + www.downloadHandler.text);
+                    userRole = www.downloadHandler.text;
+                    Debug.Log("UserRole: " + userRole);
                     SceneManager.LoadScene("MenuModified");
                 }
                 Debug.Log("Response: " + www.downloadHandler.text);
