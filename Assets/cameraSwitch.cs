@@ -33,10 +33,12 @@ public class cameraSwitch : MonoBehaviour
 
             if (isBirdseyeView)
             {
+                RenderSettings.fog = false;
                 EnableBirdseyeView();
             }
             else
             {
+                RenderSettings.fog = true;
                 DisableBirdseyeView();
             }
         }
