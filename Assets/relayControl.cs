@@ -102,12 +102,12 @@ public class relayControl : MonoBehaviour
                 Debug.Log("button B pressed");
                 if (relayOneOn == false)
                 {
-                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser/?out_one=1&out_two=0";
+                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/addrelayout/?out_one=1&out_two=0";
                     relayOneOn = true;
                 }
                 else
                 {
-                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser/?out_one=0&out_two=0";
+                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/addrelayout/?out_one=0&out_two=0";
                 }
                 StartCoroutine(sendRelayOutput());
                 buttonPressed = true;
@@ -117,12 +117,12 @@ public class relayControl : MonoBehaviour
                 Debug.Log("button Y pressed");
                 if (relayTwoOn == false)
                 {
-                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser/?out_one=0&out_two=1";
+                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/addrelayout/?out_one=0&out_two=1";
                     relayTwoOn = true;
                 }
                 else
                 {
-                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser/?out_one=0&out_two=0";
+                    url = "https://flask-mongo-backend-ar230500-famas.vercel.app/addrelayout/?out_one=0&out_two=0";
                 }
                 StartCoroutine(sendRelayOutput());
                 buttonPressed = true;
