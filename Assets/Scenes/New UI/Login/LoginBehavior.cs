@@ -9,7 +9,6 @@ using MongoDB.Bson;
 
 public class LoginBehavior : MonoBehaviour
 {
-    // checking node.js
     string geturl =  "https://flask-mongo-backend-ar230500-famas.vercel.app/getuser";
     string posturl = "https://flask-mongo-backend-ar230500-famas.vercel.app/adduser";
     string testinggeturl = "http://127.0.0.1:5000/getuser/";
@@ -25,7 +24,6 @@ public class LoginBehavior : MonoBehaviour
     public void getUser()
     {
         Debug.Log("Login button pressed");
-        string id = ObjectId.GenerateNewId().ToString();
         
         StartCoroutine(GetUserQuery(emailText, passwordText));
     }
@@ -64,15 +62,6 @@ public class LoginBehavior : MonoBehaviour
         Debug.Log("Login button pressed");
         emailText = email.text;
         passwordText = password.text;
-
-        // if (emailText == "aliza.khorasi@gmail.com" & passwordText == "virtyou123")
-        // {
-        //     SceneManager.LoadScene("MenuModified");
-        // }
-
         getUser();
-        //setText();
-
-        //authenticate(emailText, passwordText);
     }
 }
