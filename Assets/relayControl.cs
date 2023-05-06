@@ -67,6 +67,7 @@ public class relayControl : MonoBehaviour
                 }
             }
 
+            yield return new WaitForSeconds(5);
         }
     }
 }
