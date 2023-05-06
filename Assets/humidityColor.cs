@@ -51,7 +51,7 @@ public class humidityColor : MonoBehaviour
                 {
                     string json = webRequest.downloadHandler.text;
                     List<BsonDocument> readings = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<List<BsonDocument>>(json);
-                    Debug.Log(readings);
+                    // Debug.Log(readings);
 
                     if (readings != null && readings.Count > 0)
                     {

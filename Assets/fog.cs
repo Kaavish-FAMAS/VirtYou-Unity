@@ -4,64 +4,72 @@ using UnityEngine;
 using UnityEngine.UI;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using UnityEngine.Networking;
 
 public class fog : MonoBehaviour
 {
-    private MongoClient mongoClient;
-    private IMongoDatabase db;
     private IMongoCollection<BsonDocument> collection;
     private IEnumerator<BsonDocument> cursor;
 
     void Start()
     {
-        string connectionString = "mongodb+srv://asadtariq1999:virtyou@testingvirtyou.ner4fbz.mongodb.net/?retryWrites=true&w=majority";
-        
-        mongoClient = new MongoClient(connectionString);
-        
-        db = mongoClient.GetDatabase("sensors");
+        string apiUrl = "https://flask-mongo-backend-ar230500-famas.vercel.app/getsensor/";
 
-        // Get a reference to the "readings" collection
-        collection = db.GetCollection<BsonDocument>("readings");
-
-        // Get a cursor to the first document
-        cursor = collection.FindSync(new BsonDocument()).ToEnumerable().GetEnumerator();
-        StartCoroutine(UpdateFog());
+        StartCoroutine(UpdateFog(apiUrl));
     }
 
-    private IEnumerator UpdateFog()
+    private IEnumerator UpdateFog(string apiUrl)
     {
 
         while (true)
         {
-            // If there are more documents to read, read the next one
-            if (cursor.MoveNext())
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
             {
-                var document = cursor.Current;
-                int co2Level = (int) document[1]["co2"];
-                Debug.Log(co2Level);
+                yield return webRequest.SendWebRequest();
 
-                RenderSettings.fog = true;
-                
-                if (co2Level > 200)
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
                 {
-                    RenderSettings.fogColor = Color.red;
-                    RenderSettings.fogDensity = 0.06F;
+                    Debug.Log("Error: " + webRequest.error);
                 }
                 else
                 {
-                    RenderSettings.fogColor = Color.green;
-                    RenderSettings.fogDensity = 0.05F;
+                    string json = webRequest.downloadHandler.text;
+                    List<BsonDocument> readings = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<List<BsonDocument>>(json);
+                    // Debug.Log(readings);
+
+                    if (readings != null && readings.Count > 0)
+                    {
+                        RenderSettings.fog = true;
+
+                        // Iterate over the readings and display the humidity for each one
+                        foreach (BsonDocument reading in readings)
+                        {
+                            int co2Level = (int) reading[1]["co2"];
+
+                            if (co2Level > 200)
+                            {
+                                RenderSettings.fogColor = Color.red;
+                                RenderSettings.fogDensity = 0.06F;
+                            }
+                            else
+                            {
+                                RenderSettings.fogColor = Color.green;
+                                RenderSettings.fogDensity = 0.05F;
+                            }
+
+                            yield return new WaitForSeconds(5);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("No sensor data found");
+                    }
                 }
             }
-            
-            else // If we have reached the end of the cursor, reset it
-            {
-                cursor.Dispose();
-                cursor = collection.FindSync(new BsonDocument()).ToEnumerable().GetEnumerator();
-            }
 
-            // Wait for 5 seconds before executing the next iteration of the coroutine
+            // Wait for 15 seconds before executing the next iteration of the coroutine
             yield return new WaitForSeconds(5);
         }
+
     }
 }
