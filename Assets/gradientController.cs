@@ -8,8 +8,11 @@ using UnityEngine.Networking;
 
 public class gradientController : MonoBehaviour
 {
+    public float minValue = 16f;
+    public float maxValue = 45f;
     private Material material;
-    private Color newColor;
+    private Color startColor = Color.red;
+    private Color endColor = Color.blue;
 
     void Start()
     {
@@ -46,25 +49,26 @@ public class gradientController : MonoBehaviour
                         foreach (BsonDocument reading in readings)
                         {
                             float temperature = (float) reading[1]["temperature"].ToDouble();
+                            float t = Mathf.InverseLerp(minValue, maxValue, temperature);
                             
-                            if (temperature > 28.5F)
+                            if (temperature > 35.1F)
                             {
+                                // Interpolate between the start and end colors based on the temperature value
+                                Color color = Color.Lerp(startColor, endColor, t);
+
                                 if (material != null)
                                 {
-                                    bool bConverted = ColorUtility.TryParseHtmlString("#fe4e00", out newColor);
-                                    if (bConverted) {
-                                        material.color = newColor;
-                                    }
+                                    material.color = color;
                                 }
                             }
                             else
                             {
+                                // Interpolate between the start and end colors based on the temperature value
+                                Color color = Color.Lerp(endColor, startColor, t);
+
                                 if (material != null)
                                 {
-                                    bool bConverted = ColorUtility.TryParseHtmlString("#5fbff9", out newColor);
-                                    if (bConverted) {
-                                        material.color = newColor;
-                                    }
+                                    material.color = color;
                                 }
                             }
 
