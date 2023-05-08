@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4211158, g: 0.45190853, b: 0.47618914, a: 1}
+  m_IndirectSpecularColor: {r: 0.42366493, g: 0.45486385, b: 0.4782418, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3870,9 +3870,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
-  temperature: 25
-  startColor: {r: 0, g: 0, b: 1, a: 1}
-  endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!64 &602569453
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6172,7 +6169,6 @@ GameObject:
   - component: {fileID: 979346713}
   - component: {fileID: 979346719}
   - component: {fileID: 979346718}
-  - component: {fileID: 979346717}
   - component: {fileID: 979346716}
   - component: {fileID: 979346715}
   - component: {fileID: 979346714}
@@ -6261,14 +6257,6 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 0
---- !u!81 &979346717
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979346712}
-  m_Enabled: 1
 --- !u!124 &979346718
 Behaviour:
   m_ObjectHideFlags: 0
@@ -7522,9 +7510,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
-  temperature: 40
-  startColor: {r: 0, g: 0, b: 1, a: 1}
-  endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &1256825468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9143,9 +9128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
-  temperature: 18
-  startColor: {r: 0, g: 0, b: 1, a: 1}
-  endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &1493032976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10402,9 +10384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
-  temperature: 35
-  startColor: {r: 0, g: 0, b: 1, a: 1}
-  endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &1832552033
 PrefabInstance:
   m_ObjectHideFlags: 0
