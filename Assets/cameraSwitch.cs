@@ -27,7 +27,7 @@ public class cameraSwitch : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("hit")) // Change this to the input you want to use to switch between views
+        if (Input.GetButtonDown("hit") || Input.GetKeyDown(KeyCode.Space)) // Change this to the input you want to use to switch between views
         {
             isBirdseyeView = !isBirdseyeView;
 
@@ -53,6 +53,8 @@ public class cameraSwitch : MonoBehaviour
         //birdseyeCamera.orthographicSize = birdseyeSize;
 
         birdseyeCamera.enabled = true;
+        birdseyeCamera.transform.position = new Vector3(10f, 23.24f, -11.08f);
+        birdseyeCamera.transform.rotation = Quaternion.Euler(89.878f, -82.744f, 7.527f);
         XRSettings.showDeviceView = false;
         // Enable plane renderer component when switching to bird's eye view camera
         firstPlane.GetComponent<MeshRenderer>().enabled = true;

@@ -2079,6 +2079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5801114299121554337, guid: 36b1d56c314fd8e4d9a99883c912fc1c, type: 3}
+    - {fileID: 1819064525541299411, guid: 36b1d56c314fd8e4d9a99883c912fc1c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 36b1d56c314fd8e4d9a99883c912fc1c, type: 3}
 --- !u!1001 &215390537
 PrefabInstance:
@@ -3870,6 +3871,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
+  firstPlane: {fileID: 1463318007}
+  secondPlane: {fileID: 573507125}
+  thirdPlane: {fileID: 1813064992}
+  fourthPlane: {fileID: 1254552218}
 --- !u!64 &602569453
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4467,7 +4472,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684798526}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49b3615f61bd85f41a8f9e204c2e12f0, type: 3}
   m_Name: 
@@ -6170,7 +6175,6 @@ GameObject:
   - component: {fileID: 979346719}
   - component: {fileID: 979346718}
   - component: {fileID: 979346716}
-  - component: {fileID: 979346715}
   - component: {fileID: 979346714}
   m_Layer: 0
   m_Name: BirdsEyeViewCamera
@@ -6188,7 +6192,7 @@ Transform:
   m_GameObject: {fileID: 979346712}
   m_LocalRotation: {x: 0.49821708, y: -0.5016411, z: 0.5007119, w: 0.4994233}
   m_LocalPosition: {x: 0.43, y: 23.24, z: -11.08}
-  m_LocalScale: {x: 0.99998677, y: 1.0000163, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -6227,18 +6231,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &979346715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979346712}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aebfb4b86b2e54606894da54f755db2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &979346716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7510,6 +7502,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
+  firstPlane: {fileID: 1463318007}
+  secondPlane: {fileID: 573507125}
+  thirdPlane: {fileID: 1813064992}
+  fourthPlane: {fileID: 1254552218}
 --- !u!1001 &1256825468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9128,6 +9124,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
+  firstPlane: {fileID: 1463318007}
+  secondPlane: {fileID: 573507125}
+  thirdPlane: {fileID: 1813064992}
+  fourthPlane: {fileID: 1254552218}
 --- !u!1001 &1493032976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10384,6 +10384,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 16
   maxValue: 45
+  firstPlane: {fileID: 1463318007}
+  secondPlane: {fileID: 573507125}
+  thirdPlane: {fileID: 1813064992}
+  fourthPlane: {fileID: 1254552218}
 --- !u!1001 &1832552033
 PrefabInstance:
   m_ObjectHideFlags: 0
